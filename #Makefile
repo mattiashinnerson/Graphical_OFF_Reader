@@ -1,0 +1,26 @@
+OBJS   = ass2gui.o guitest.o
+TARGET = i
+
+CXX = g++
+
+DBFLAGS  = -O0 -g3 -ggdb3 -fno-inline
+#DBFLAGS = -O2
+WFLAGS   = -Wall -ansi
+GLFLAGS  = `pkg-config --cflags gtk+-2.0`
+LGLFLAGS = `pkg-config --libs gtk+-2.0` -lGL -lGLEW -lGLU -lglut
+
+CXXFLAGS = $(WFLAGS) $(DFLAGS) $(GLFLAGS)
+LDFLAGS  =  -export-dynamic -lXext -lX11 $(LGLFLAGS)
+
+
+all: $(TARGET)
+clean:
+	rm -f $(OBJS) $(TARGET)
+
+.SUFFIXES: .cc
+.cc.o:
+	$(CXX) -c $(CXXFLAGS) $<
+.c.o:
+	$(CXX) -c $(CXXFLAGS) $<
+$(TARGET): $(OBJS)
+	$(CXX) -o $(TARGET) $(OBJS) $(LDFLAGS) 
